@@ -1,0 +1,22 @@
+前提条件:元からdivのopacityは0
+
+<div class="paragraph__wrapper">
+    <p>要素</p>
+    <p>要素</p>
+    <p>要素</p>←1.divの中の最後のp要素のopacityが1になった瞬間かつ、左矢印キーまたは画面の中央から左が１回押されたら...
+</div>←2.このdivとこのdivの中の全てのpのopacityを0にする
+<div class="paragraph__wrapper">
+    <p>要素</p>
+    <p>要素</p>
+    <p>要素</p>←以下繰り返す
+</div>
+<div class="paragraph__wrapper">
+    <p>要素</p>
+    <p>要素</p>
+    <p>要素</p>
+</div>
+.
+.
+.
+
+上記の条件でjQueryにしてください。
