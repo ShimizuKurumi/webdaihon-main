@@ -12,7 +12,7 @@ $(document).ready(function () {
     let firstChildCount = 1;
 
 
-    $(".paragraph").each((i, elem) => {
+    $("p.paragraph").each((i, elem) => {
         paragraph[i] = $(elem);
         paragraphWidth[i] = $(elem).width();
     });
@@ -60,12 +60,16 @@ $(document).ready(function () {
         $(".paragraph__wrapper p:first-of-type").addClass('first-child');
 
 
-        document.addEventListener('keydown', (event) => {
+
+        $(document).on("keydown touchstart", (event) => {
+            const screenWidth = $(window).width();
+            const touchX = event.originalEvent.touches[0].clientX;
 
             // 左矢印キーが押された場合
-            if (event.key === 'ArrowLeft') {
+            if (event.key === 'ArrowLeft' || touchX < screenWidth / 2) {
                 // クラス名last-childの要素を取得
                 const lastChild = $('.last-child');
+                console.log("左をタッチしました");
 
                 // lastChildのopacityが1の場合、targetDivのopacityを0にする
                 if (lastChild[lastChildCount].style.opacity === '1') {
@@ -100,10 +104,12 @@ $(document).ready(function () {
 
             }
 
-            if (event.key === 'ArrowRight') {
+            if (event.key === 'ArrowRight' || touchX >= screenWidth / 2) {
                 const firstChild = $('.first-child');
                 console.log("右矢印キーが１回押されました");
                 console.log(firstChild);
+                console.log("右をタッチしました");
+
 
                 // lastChildのopacityが1の場合、targetDivのopacityを0にする
                 if (firstChild[firstChildCount].style.opacity === '0') {

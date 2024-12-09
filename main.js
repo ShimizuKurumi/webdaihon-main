@@ -222,34 +222,29 @@ $(document).ready(function () {
 
         // クラス名"last-child"を持つ要素を取得
 
-        const lastChildAll = document.querySelectorAll('.last-child');
         const lastChild = document.querySelector('.last-child');
-        const lastChildLen = lastChildAll.length;
+        const lastChildAll = document.querySelectorAll('.last-child');
+        const lastChildLenfth = lastChildAll.length;
 
         if (lastChild.style.opacity === '1') {
             console.log("lastchildがopacity1になりました");
+            lastChildCount++;
+
             console.log(lastChildCount);
             console.log(wrapperCount);
 
-            if (wrapperCount > lastChildCount) {
-                lastChildCount++;
-                // wrapperCountとlastChildCountが等しい場合に実行する処理
-                console.log("wrapperCountとlastChildCountが異なる");
-                // ここに具体的な処理を記述してください
-            } else if (wrapperCount === lastChildCount) {
-                console.log("wrapperCountとlastChildCountが同じ");
-                $(".paragraph__wrapper").css({ 'opacity': '0' });//
-                $(".paragraph__wrapper").next().css({ 'opacity': '1' });//次のdivのopacityを1にする
-            }
+            lastChildAll.forEach((block, index) => {
 
+                //処理
+                if (index === lastChildCount) {
+                    console.log("wrapperCountとlastChildCountが同じ");
+                    $(".paragraph__wrapper").css({ 'opacity': '0' });//
+                    $(".paragraph__wrapper").next().css({ 'opacity': '1' });//次のdivのopacityを1にする
+                    // 全ての.paragraph__wrapper要素に対して処理を行う
+                }
 
+            });
 
-            // if (3 === lastChildCount) {
-            //     console.log("lastchildの数は" + lastChildLen);
-            //     console.log(firstChildCount);
-            //     $(".paragraph__wrapper p").css({ 'opacity': '0' });
-
-            // }
         }
 
 
