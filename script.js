@@ -9,7 +9,9 @@ $(document).ready(function () {
     let keyCount = 0;
     let wrapperCount = 1;
     let lastChildCount = 0;
-    let firstChildCount = 1;
+    let firstChildCount = 0;
+    let $newDiv = $('<div class="paragraph__wrapper">');
+    console.log("firstChildCount" + firstChildCount);
 
 
     $("p.paragraph").each((i, elem) => {
@@ -19,138 +21,119 @@ $(document).ready(function () {
     console.log(paragraphWidth);
 
 
-    $(function () {
-        var totalWidth = 0;
-        var $newDiv = $('<div class="paragraph__wrapper">');
-        var count = 0; // カウント用の変数を初期化
 
+    //パラグラフ---------------------------
+    $('p.paragraph').each(function () {
 
-        //パラグラフ---------------------------
-        $('p.paragraph').each(function () {
+        var $this = $(this);
+        var thisWidth = $this.outerWidth(true); // 外側のマージンも含めた幅を取得
 
-            var $this = $(this);
-            var thisWidth = $this.outerWidth(true); // 外側のマージンも含めた幅を取得
-
-            // 合計幅が400pxを超える場合
-            if (totalWidth + thisWidth > $(window).width() * 0.85) {
-                // 新しいdiv要素をbodyに追加
-                $('body').append($newDiv);
-                // 合計幅をリセット
-                totalWidth = 0;
-                $newDiv = $('<div class="paragraph__wrapper">');
-                count++;
-            }
-
-            // pタグを新しいdiv要素に追加
-            $newDiv.append($this);
-            // 合計幅に加算
-            totalWidth += thisWidth;
-
-            $(".paragraph__wrapper p:last").addClass('last-child');
-
-        });
-
-
-        // 最後のdiv要素をbodyに追加（最後のpタグが追加されていない場合）
-        if ($newDiv.children().length > 0) {
+        // 合計幅が400pxを超える場合
+        if (totalWidth + thisWidth > $(window).width() * 0.85) {
+            // 新しいdiv要素をbodyに追加
             $('body').append($newDiv);
+            // 合計幅をリセット
+            totalWidth = 0;
+            $newDiv = $('<div class="paragraph__wrapper">');
+            count++;
         }
 
-        const elements = $(".paragraph__wrapper");
-        $(".paragraph__wrapper p:first-of-type").addClass('first-child');
+        // pタグを新しいdiv要素に追加
+        $newDiv.append($this);
+        // 合計幅に加算
+        totalWidth += thisWidth;
 
-
-
-        $(document).on("keydown touchstart", (event) => {
-            const screenWidth = $(window).width();
-            const touchX = event.originalEvent.touches[0].clientX;
-
-            // 左矢印キーが押された場合
-            if (event.key === 'ArrowLeft' || touchX < screenWidth / 2) {
-                // クラス名last-childの要素を取得
-                const lastChild = $('.last-child');
-                console.log("左をタッチしました");
-
-                // lastChildのopacityが1の場合、targetDivのopacityを0にする
-                if (lastChild[lastChildCount].style.opacity === '1') {
-                    console.log(lastChild[lastChildCount]);
-                    keyCount++;
-
-
-                    if (keyCount === 2) {
-                        // 2回押されたら処理を実行
-                        console.log('左矢印キーが2回押されました');
-                        // ここに実行したい処理を記述
-                        // 例:
-                        wrapperCount++;
-
-                        $(".paragraph__wrapper").each(function (index) {
-                            $(this).css("opacity", "0");
-                        });
-
-
-                        $(elements[wrapperCount]).css({
-                            // ここに変更したいCSSプロパティを記述する
-                            opacity: '1',
-                        });
-                    }
-                    if (keyCount === 3) {
-                        keyCount = 0;
-                        console.log('左矢印キーが3回押されました');
-                        lastChildCount++;
-                    }
-
-                }
-
-            }
-
-            if (event.key === 'ArrowRight' || touchX >= screenWidth / 2) {
-                const firstChild = $('.first-child');
-                console.log("右矢印キーが１回押されました");
-                console.log(firstChild);
-                console.log("右をタッチしました");
-
-
-                // lastChildのopacityが1の場合、targetDivのopacityを0にする
-                if (firstChild[firstChildCount].style.opacity === '0') {
-                    keyCount++;
-
-                    if (keyCount === 1) {
-                        // 2回押されたら処理を実行
-                        console.log('右矢印キーが1回押されました');
-                        // ここに実行したい処理を記述
-                        // 例:
-                        wrapperCount--;
-
-                        $(".paragraph__wrapper").each(function (index) {
-                            $(this).css("opacity", "0");
-                        });
-
-
-                        $(elements[wrapperCount]).css({
-                            // ここに変更したいCSSプロパティを記述する
-                            opacity: '1',
-                        });
-                    }
-                    if (keyCount === 2) {
-                        keyCount = 0;
-                        console.log('右矢印キーが2回押されました');
-                        firstChildCount++;
-                    }
-
-                }
-
-            }
-        });
-
+        // $(".paragraph__wrapper p:last").addClass('last-child');
 
     });
 
 
-    //個別演出--------------------------------------
-    $(document).keydown(function (e) {
+    // 最後のdiv要素をbodyに追加（最後のpタグが追加されていない場合）
+    if ($newDiv.children().length > 0) {
+        $('body').append($newDiv);
+    }
 
-        if (e.which === 37) { // 左矢印キー
+    const elements = $(".paragraph__wrapper");
+    $(".paragraph__wrapper p:first-of-type").addClass('first-child');
+    $(".paragraph__wrapper p:last-of-type").addClass('last-child');
+
+
+    count = 0;
+    totalWidth = 0;
+
+    $(document).on("keydown touchstart", (event) => {
+        const screenWidth = $(window).width();
+        let touchX = screenWidth;
+
+        // console.log(event.key, touchX);
+
+
+        //両方
+        if (event.key === 'ArrowLeft') {
+            touchX = 0;
+        } else if (event.key === 'ArrowRight') {
+            touchX = screenWidth;
+        } else {
+            touchX = event.originalEvent.touches[0].clientX;
+        }
+        //ここまで両方
+
+        // 左矢印キーが押された場合 またはタッチ
+        if (event.key === 'ArrowLeft' || touchX < screenWidth / 2) {
+            // クラス名last-childの要素を取得
+            const lastChild = $('.last-child');
+            console.log("左");
+
+            // lastChildのopacityが1の場合、targetDivのopacityを0にする
+            if (lastChild[lastChildCount].style.opacity === '1') {
+
+                lastChildCount++;
+                console.log('lastchildCount' + lastChildCount);
+
+
+
+                elements.each(function (index) {
+                    $(this).css("opacity", "0");
+                });
+
+
+                $(elements[lastChildCount]).css({
+                    // ここに変更したいCSSプロパティを記述する
+                    opacity: '1',
+                });
+
+                firstChildCount++;
+
+            }
+            // if (lastChild[lastChildCount].style.opacity === '1') {
+            //     console.log(lastChild[lastChildCount]);
+            //     keyCount++;
+
+
+            //     if (keyCount === 2) {
+            //         // 2回押されたら処理を実行
+            //         console.log('左矢印キーが2回押されました');
+            //         // ここに実行したい処理を記述
+            //         // 例:
+            //         wrapperCount++;
+
+            //         $(".paragraph__wrapper").each(function (index) {
+            //             $(this).css("opacity", "0");
+            //         });
+
+
+            //         $(elements[wrapperCount]).css({
+            //             // ここに変更したいCSSプロパティを記述する
+            //             opacity: '1',
+            //         });
+            //     }
+            //     if (keyCount === 3) {
+            //         keyCount = 0;
+            //         console.log('左矢印キーが3回押されました');
+            //         lastChildCount++;
+            //     }
+
+            // }
 
             if (0 <= count && count < 29) {
                 count++;
@@ -159,6 +142,7 @@ $(document).ready(function () {
                     opacity: '1',
                 });
             };
+
             if (count === 4) {
                 $('.bg-eye').css({
                     'opacity': "0",
@@ -281,10 +265,31 @@ $(document).ready(function () {
             };
 
         }
+        //右矢印が押された場合 またはタッチ
+        if (event.key === 'ArrowRight' || touchX >= screenWidth / 2) {
+            const firstChild = $('.first-child');
+            console.log("右");
+            console.log("firstChildCount" + firstChildCount);
+
+            // lastChildのopacityが1の場合、targetDivのopacityを0にする
+            if (firstChild[firstChildCount].style.opacity === '0') {
+
+                console.log('firstChildCount' + firstChildCount);
 
 
-        //右矢印キー-------------------------------------
-        else if (e.which === 39) { // 右矢印キー
+                elements.each(function (index) {
+                    $(this).css("opacity", "0");
+                });
+
+
+                $(elements[firstChildCount]).css({
+                    // ここに変更したいCSSプロパティを記述する
+                    opacity: '1',
+                });
+
+            }
+            //ここまで
+
             if (0 < count && count <= 29) {
                 count--;
 
@@ -415,15 +420,300 @@ $(document).ready(function () {
                 $('#bgm')[0].currentTime = 0;
             }
 
+
         }
-
-        console.log(count, totalWidth);
-
     });
 
 
-}
-);
+    //個別演出--------------------------------------
+    // $(document).on("keydown touchstart", (e) => {
+    //     const screenWidth = $(window).width();
+    //     let touchX;
+
+    //     // if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    //     //     touchX = 0;
+    //     // } else {
+    //     //     touchX = e.originalEvent.touches[0].clientX;
+    //     // }
+
+
+
+    //     if (e.key === 'ArrowLeft' || touchX < screenWidth / 2) { // 左矢印キー
+
+    //         // console.log("左をタッチ２");
+    //         // if (0 <= count && count < 29) {
+    //         //     count++;
+    //         //     //PC処理
+    //         //     paragraph[count].css({
+    //         //         opacity: '1',
+    //         //     });
+    //         // };
+    //         // if (count === 4) {
+    //         //     $('.bg-eye').css({
+    //         //         'opacity': "0",
+    //         //     });
+
+    //         // } else if (count === 5) {
+    //         //     $('.bg-eye').css({
+    //         //         'opacity': "0.1",
+    //         //     });
+    //         // } else if (count === 8) {
+    //         //     $('.body').css({
+    //         //         'background-color': "#000",
+    //         //     });
+    //         //     $('.paragraph__wrapper').css({
+    //         //         'color': "#F9EFE1",
+    //         //     });
+    //         //     $('.help__text').css({
+    //         //         'color': "#F9EFE1",
+    //         //     });
+    //         //     $('.line--top').css({
+    //         //         'background-color': "#F9EFE1",
+    //         //     });
+    //         //     $('.line--bottom').css({
+    //         //         'background-color': "#F9EFE1",
+    //         //     });
+    //         //     $('.line--right').css({
+    //         //         'background-color': "#F9EFE1",
+    //         //     }); $('.line--left').css({
+    //         //         'background-color': "#F9EFE1",
+    //         //     });
+    //         //     $('.cls-1').css({
+    //         //         'fill': "#F9EFE1",
+    //         //     });
+    //         //     $('.bg-eye').css({
+    //         //         'opacity': "0",
+    //         //     });
+    //         //     $('.st0').css({
+    //         //         'fill': "#F9EFE1",
+    //         //     });
+
+    //         // }
+    //         // else if (count === 9) {
+    //         //     $('#paper')[0].play();
+
+    //         //     $('.body').css({
+    //         //         'background-color': "#F9EFE1",
+    //         //     });
+    //         //     $('.paragraph__wrapper').css({
+    //         //         'color': "#0B1632",
+    //         //     });
+    //         //     $('.help__text').css({
+    //         //         'color': "#0B1632",
+    //         //     });
+    //         //     $('.line--top').css({
+    //         //         'background-color': "#0B1632",
+    //         //     });
+    //         //     $('.line--bottom').css({
+    //         //         'background-color': "#0B1632",
+    //         //     });
+    //         //     $('.line--right').css({
+    //         //         'background-color': "#0B1632",
+    //         //     }); $('.line--left').css({
+    //         //         'background-color': "#0B1632",
+    //         //     });
+    //         //     $('.cls-1').css({
+    //         //         'fill': "#0B1632",
+    //         //     });
+    //         //     $('.bg-eye').css({
+    //         //         'opacity': "0.1",
+    //         //     });
+    //         //     $('.st0').css({
+    //         //         'fill': "#0B1632",
+    //         //     });
+
+    //         // }
+    //         // else if (count === 11) {
+    //         //     $('.body').css({
+    //         //         'animation': "tikatika .3s step-end forwards"
+    //         //     });
+    //         //     $('.paragraph__wrapper').css({
+    //         //         'color': "#F9EFE1",
+    //         //     });
+    //         //     $('.help__text').css({
+    //         //         'color': "#F9EFE1",
+    //         //     });
+    //         //     $('.line--top').css({
+    //         //         'background-color': "#F9EFE1",
+    //         //     });
+    //         //     $('.line--bottom').css({
+    //         //         'background-color': "#F9EFE1",
+    //         //     });
+    //         //     $('.line--right').css({
+    //         //         'background-color': "#F9EFE1",
+    //         //     }); $('.line--left').css({
+    //         //         'background-color': "#F9EFE1",
+    //         //     });
+    //         //     $('.cls-1').css({
+    //         //         'fill': "#F9EFE1",
+    //         //     });
+    //         //     $('.bg-eye').css({
+    //         //         'fill': "#F9EFE1",
+    //         //     });
+    //         //     $('.st0').css({
+    //         //         'fill': "#F9EFE1",
+    //         //     });
+
+    //         // } else if (count === 15) {
+    //         //     $('.bg-eye').css({
+    //         //         'opacity': "0",
+    //         //     });
+    //         // } else if (count === 16) {
+    //         //     $('.bg-eye').css({
+    //         //         'opacity': "0.1",
+    //         //     });
+
+    //         // } else if (count === 18) {
+    //         //     $('#clock')[0].play();
+    //         // } else if (count === 25) {
+    //         //     $('#bgm')[0].play();
+    //         // };
+
+    //     }
+
+
+    //     //右矢印キー-------------------------------------
+    //     if (e.key === 'ArrowRight' || touchX >= screenWidth / 2) { // 右矢印キー
+    //         console.log("右2");
+
+    //         if (0 < count && count <= 29) {
+    //             count--;
+
+    //             paragraph[count + 1].css({
+    //                 opacity: '0',
+    //             });
+
+    //         };
+
+    //         if (count < 4) {
+    //             $('.bg-eye').css({
+    //                 'opacity': "0.1",
+    //             });
+    //         } else if (count < 5) {
+    //             $('.bg-eye').css({
+    //                 'opacity': "0",
+    //             });
+    //         } else if (count < 8) {
+    //             $('.body').css({
+    //                 'background-color': "#F9EFE1",
+    //             });
+    //             $('.paragraph__wrapper').css({
+    //                 'color': "#0B1632",
+    //             });
+    //             $('.help__text').css({
+    //                 'color': "#0B1632",
+    //             });
+    //             $('.line--top').css({
+    //                 'background-color': "#0B1632",
+    //             });
+    //             $('.line--bottom').css({
+    //                 'background-color': "#0B1632",
+    //             });
+    //             $('.line--right').css({
+    //                 'background-color': "#0B1632",
+    //             }); $('.line--left').css({
+    //                 'background-color': "#0B1632",
+    //             });
+    //             $('.cls-1').css({
+    //                 'fill': "#0B1632",
+    //             });
+    //             $('.bg-eye').css({
+    //                 'opacity': "0.1",
+    //             });
+    //             $('.st0').css({
+    //                 'fill': "#0B1632",
+    //             });
+    //         }
+    //         else if (count < 9) {
+    //             $('.body').css({
+    //                 'background-color': "#000",
+    //             });
+    //             $('.paragraph__wrapper').css({
+    //                 'color': "#F9EFE1",
+    //             });
+    //             $('.help__text').css({
+    //                 'color': "#F9EFE1",
+    //             });
+    //             $('.line--top').css({
+    //                 'background-color': "#F9EFE1",
+    //             });
+    //             $('.line--bottom').css({
+    //                 'background-color': "#F9EFE1",
+    //             });
+    //             $('.line--right').css({
+    //                 'background-color': "#F9EFE1",
+    //             }); $('.line--left').css({
+    //                 'background-color': "#F9EFE1",
+    //             });
+    //             $('.cls-1').css({
+    //                 'fill': "#F9EFE1",
+    //             });
+    //             $('.bg-eye').css({
+    //                 'opacity': "0",
+    //             });
+    //             $('.st0').css({
+    //                 'fill': "#F9EFE1",
+    //             });
+    //         }
+
+    //         else if (count < 11) {
+
+    //             $('.body').css({
+    //                 'animation': "beige .3s ease forwards"
+    //             });
+
+    //             $('.paragraph__wrapper').css({
+    //                 'color': "#0B1632",
+    //             });
+    //             $('.help__text').css({
+    //                 'color': "#0B1632",
+    //             });
+    //             $('.line--top').css({
+    //                 'background-color': "#0B1632",
+    //             });
+    //             $('.line--bottom').css({
+    //                 'background-color': "#0B1632",
+    //             });
+    //             $('.line--right').css({
+    //                 'background-color': "#0B1632",
+    //             }); $('.line--left').css({
+    //                 'background-color': "#0B1632",
+    //             });
+    //             $('.cls-1').css({
+    //                 'fill': "#0B1632",
+    //             });
+    //             $('.bg-eye').css({
+    //                 'fill': "#0B1632",
+    //             });
+    //             $('.st0').css({
+    //                 'fill': "#0B1632",
+    //             });
+
+    //         }
+
+    //         else if (count < 15) {
+    //             $('.bg-eye').css({
+    //                 'opacity': "0.1",
+    //             });
+
+    //         } else if (count < 16) {
+    //             $('.bg-eye').css({
+    //                 'opacity': "0",
+    //             });
+
+    //         } else if (count < 25) {
+    //             $('#bgm')[0].pause();
+    //             $('#bgm')[0].currentTime = 0;
+    //         }
+
+    //     }
+
+    //     console.log(count, totalWidth);
+
+    // });
+
+
+});
 
 
 // $(document).ready(function () {

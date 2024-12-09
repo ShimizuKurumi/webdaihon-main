@@ -122,7 +122,8 @@ html {
         margin-right: 2em;
     }
 
-    &__wrapper {
+    &__wrapper,
+    &__all {
         position: fixed;
         right: 8%;
         top: 0;
