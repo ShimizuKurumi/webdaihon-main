@@ -9,8 +9,9 @@ $(document).ready(function () {
     let keyCount = 0;
     let wrapperCount = 1;
     let lastChildCount = 0;
-    let firstChildCount = 0;
+    let firstChildCount = 1;
     let $newDiv = $('<div class="paragraph__wrapper">');
+
 
 
     $("p.paragraph").each((i, elem) => {
@@ -60,13 +61,17 @@ $(document).ready(function () {
     count = 0;
     totalWidth = 0;
 
+    const lastChild = $('.last-child');
+    const firstChild = $('.first-child');
+    const paragraphWrapperP = $('.paragraph__wrapper p');
+    const currentElement = $('.currentWrapper');
+    const nextWrapper = currentElement.next('.paragraph__wrapper');
+    const prevWrapper = currentElement.prev('.paragraph__wrapper');
+
+
     $(document).on("keydown touchstart", (event) => {
         const screenWidth = $(window).width();
         let touchX = screenWidth;
-        const lastChild = $('.last-child');
-        const firstChild = $('.first-child');
-        const paragraphWrapperP = $('.paragraph__wrapper p');
-
         // console.log(event.key, touchX);
 
 
@@ -85,6 +90,7 @@ $(document).ready(function () {
             // クラス名last-childの要素を取得
             console.log("左");
             console.log("lastchildCount" + lastChildCount + "カウント");
+            console.log("firstChildCount" + firstChildCount);
 
 
             // lastChildのopacityが1の場合、targetDivのopacityを0にする
@@ -101,10 +107,19 @@ $(document).ready(function () {
                     $(this).css("opacity", "0");
                 });
 
-                $(elements[lastChildCount]).css({
-                    // ここに変更したいCSSプロパティを記述する
-                    opacity: '1',
-                });
+                // $(elements[lastChildCount]).css({
+                //     // ここに変更したいCSSプロパティを記述する
+                //     opacity: '1',
+                // });
+
+
+                $(elements[lastChildCount]).addClass('currentWrapper');
+                $(elements[lastChildCount - 1]).removeClass('currentWrapper');
+                $(".currentWrapper").css({ 'opacity': '1' });
+
+                $(".currentWrapper").next().addClass('next-Wrapper');
+                $(".currentWrapper").removeClass('next-Wrapper');
+
             }
             // if (lastChild[lastChildCount].style.opacity === '1') {
             //     console.log(lastChild[lastChildCount]);
@@ -273,36 +288,37 @@ $(document).ready(function () {
             let $firstP = $(elements[lastChildCount]).find("p:first");
             let $otherPs = $(elements[lastChildCount]).find("p:not(:first)");
             //1
-            console.log("lastChildCount" + lastChildCount);
 
 
             // 最初のp要素がopacity:1かつ、それ以外のp要素がすべてopacity:0の場合
             if ($firstP.css("opacity") === "1" && $otherPs.css("opacity") === "0") {
+                const nextWrapperCount = $('.next-Wrapper').length;
+                console.log('.next-Wrapper要素の数:', nextWrapperCount);
+
+                // 最後の.next-Wrapper要素を取得し、クラス名を削除
+                const lastNextWrapper = $('.next-Wrapper').last();
+
                 // ここに処理内容を記述
                 console.log("このdiv内の最初のp要素のみがopacity:1です");
 
+                $(elements[lastChildCount]).removeClass('currentWrapper');
+                $(elements[lastChildCount - 1]).addClass('currentWrapper');
+
+                $(".currentWrapper").removeClass('next-Wrapper');
+                $(".currentWrapper").next().addClass('next-Wrapper');
+                $('.next-Wrapper').css({ 'opacity': '0' });
+
+
+                $(".currentWrapper").css({ 'opacity': '1' });
+                $(".currentWrapper p").css({ 'opacity': '1' });
+
+
+                lastNextWrapper.removeClass('next-Wrapper');
+
                 lastChildCount--;
-                console.log('lastchildCount' + lastChildCount);
-
-                elements.each(function (index) {
-                    $(this).css("opacity", "0");
-                });
-
-
-                $(elements[0]).css({
-                    // ここに変更したいCSSプロパティを記述する
-                    opacity: '1',
-                });
-                //0
-
-                $(paragraphWrapperP).css({
-                    // ここに変更したいCSSプロパティを記述する
-                    opacity: '1',
-                });
 
             };
 
-            // }
             //ここまで
 
             if (0 < count && count <= 29) {
@@ -438,7 +454,6 @@ $(document).ready(function () {
 
         }
     });
-
 
     //個別演出--------------------------------------
     // $(document).on("keydown touchstart", (e) => {
