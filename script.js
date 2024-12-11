@@ -289,11 +289,12 @@ $(document).ready(function () {
             let $otherPs = $(elements[lastChildCount]).find("p:not(:first)");
             //1
 
-
             // 最初のp要素がopacity:1かつ、それ以外のp要素がすべてopacity:0の場合
             if ($firstP.css("opacity") === "1" && $otherPs.css("opacity") === "0") {
                 const nextWrapperCount = $('.next-Wrapper').length;
                 console.log('.next-Wrapper要素の数:', nextWrapperCount);
+
+
 
                 // 最後の.next-Wrapper要素を取得し、クラス名を削除
                 const lastNextWrapper = $('.next-Wrapper').last();
@@ -404,7 +405,7 @@ $(document).ready(function () {
             else if (count < 11) {
 
                 $('.body').css({
-                    'animation': "beige .3s ease forwards"
+                    'animation': "tikatika .3s step-end reverse"
                 });
 
                 $('.paragraph__wrapper').css({
