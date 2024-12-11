@@ -67,6 +67,8 @@ $(document).ready(function () {
     const currentElement = $('.currentWrapper');
     const nextWrapper = currentElement.next('.paragraph__wrapper');
     const prevWrapper = currentElement.prev('.paragraph__wrapper');
+    const prevWrapper2 = currentElement.prevAll('.paragraph__wrapper').eq(1);
+
 
 
     $(document).on("keydown touchstart", (event) => {
@@ -122,6 +124,11 @@ $(document).ready(function () {
 
                 $(".currentWrapper").next().addClass('next-Wrapper');
                 $(".currentWrapper").removeClass('next-Wrapper');
+
+                $(".currentWrapper").prev().addClass("prev-Wrapper");
+                $(".currentWrapper").removeClass("prev-Wrapper");
+
+                $(".currentWrapper").prev().prev().removeClass("prev-Wrapper");
 
             }
             // if (lastChild[lastChildCount].style.opacity === '1') {
@@ -277,9 +284,9 @@ $(document).ready(function () {
                     'opacity': "0.1",
                 });
 
-            } else if (count === 18) {
+            } else if (count === 17) {
                 $('#clock')[0].play();
-            } else if (count === 25) {
+            } else if (count === 23) {
                 $('#bgm')[0].play();
             };
 
@@ -287,38 +294,47 @@ $(document).ready(function () {
         //右矢印が押された場合 またはタッチ
         if (event.key === 'ArrowRight' || touchX >= screenWidth / 2) {
             console.log("右");
-
-            let $firstP = $(elements[lastChildCount]).find("p:first");
-            let $otherPs = $(elements[lastChildCount]).find("p:not(:first)");
-            //1
-
             console.log(lastChildCount);
 
-            // 最初のp要素がopacity:1かつ、それ以外のp要素がすべてopacity:0の場合
-            if ($firstP.css("opacity") === "1" && $otherPs.css("opacity") === "0") {
-                const nextWrapperCount = $('.next-Wrapper').length;
-                // 最後の.next-Wrapper要素を取得し、クラス名を削除
-                const lastNextWrapper = $('.next-Wrapper').last();
+            // let $firstP = $(elements[lastChildCount]).find("p:first");
+            // let $otherPs = $(elements[lastChildCount]).find("p:not(:first)");
+            //1
+            let $firstP = $(".currentWrapper").find("p:first");
+            let $otherPs = $(".currentWrapper").find("p:not(:first)");
+            console.log($firstP);
 
-                // ここに処理内容を記述
+            if (lastChildCount > 0) {
 
-                $(elements[lastChildCount]).removeClass('currentWrapper');
-                $(elements[lastChildCount - 1]).addClass('currentWrapper');
+                // 最初のp要素がopacity:1かつ、それ以外のp要素がすべてopacity:0の場合
+                if ($firstP.css("opacity") === "1" && $otherPs.css("opacity") === "0") {
+                    const nextWrapperCount = $('.next-Wrapper').length;
+                    // 最後の.next-Wrapper要素を取得し、クラス名を削除
+                    const lastNextWrapper = $('.next-Wrapper').last();
 
-                $(".currentWrapper").removeClass('next-Wrapper');
-                $(".currentWrapper").next().addClass('next-Wrapper');
-                $('.next-Wrapper').css({ 'opacity': '0' });
+                    // ここに処理内容を記述
 
-                $(".currentWrapper").css({ 'opacity': '1' });
-                $(".currentWrapper p").css({ 'opacity': '1' });
+                    $(elements[lastChildCount]).removeClass('currentWrapper');
+                    $(elements[lastChildCount - 1]).addClass('currentWrapper');
+
+                    $(".currentWrapper").removeClass('next-Wrapper');
+                    $(".currentWrapper").next().addClass('next-Wrapper');
+                    $('.next-Wrapper').css({ 'opacity': '0' });
+
+                    $(".currentWrapper").css({ 'opacity': '1' });
+                    $(".currentWrapper p").css({ 'opacity': '1' });
+
+                    $(".prev-Wrapper").css({ 'opacity': '1' });
+
+                    $(".currentWrapper").removeClass("prev-Wrapper");
+                    $(".currentWrapper").prev().addClass("prev-Wrapper");
 
 
-                lastNextWrapper.removeClass('next-Wrapper');
+                    lastNextWrapper.removeClass('next-Wrapper');
 
-                lastChildCount--;
+                    lastChildCount--;
 
-            };
-
+                };
+            }
 
             //ここまで
 
@@ -447,7 +463,7 @@ $(document).ready(function () {
                     'opacity': "0",
                 });
 
-            } else if (count < 25) {
+            } else if (count < 24) {
                 $('#bgm')[0].pause();
                 $('#bgm')[0].currentTime = 0;
             }

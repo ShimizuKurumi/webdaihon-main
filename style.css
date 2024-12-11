@@ -146,7 +146,7 @@ html {
 .paragraph {
   padding-left: 0.5em;
   opacity: 0;
-  transition: 0.8s;
+  transition: 0.5s;
 }
 .paragraph--29 {
   margin-right: 2em;
@@ -227,7 +227,7 @@ html {
 }
 
 .frame-img {
-  max-width: 110px;
+  max-width: 100px;
 }
 .frame-img--2 {
   transform: scale(-1, 1);
