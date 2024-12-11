@@ -89,23 +89,26 @@ $(document).ready(function () {
         if (event.key === 'ArrowLeft' || touchX < screenWidth / 2) {
             // クラス名last-childの要素を取得
             console.log("左");
-            console.log("lastchildCount" + lastChildCount + "カウント");
-            console.log("firstChildCount" + firstChildCount);
+            console.log(lastChildCount);
 
 
             // lastChildのopacityが1の場合、targetDivのopacityを0にする
             if (lastChild[lastChildCount].style.opacity === '1') {
 
                 lastChildCount++;
-                console.log('lastchildCount' + lastChildCount);
 
                 elements.each(function (index) {
                     $(this).css("opacity", "0");
                 });
 
-                $('.paragraph__wrapper p').each(function (index) {
-                    $(this).css("opacity", "0");
-                });
+                // $('.paragraph__wrapper p').each(function (index) {
+                //     $(this).css("opacity", "0");
+                // });
+
+
+                // $('.next-Wrapper p').each(function (index) {
+                //     $(this).css("opacity", "0");
+                // });
 
                 // $(elements[lastChildCount]).css({
                 //     // ここに変更したいCSSプロパティを記述する
@@ -289,18 +292,15 @@ $(document).ready(function () {
             let $otherPs = $(elements[lastChildCount]).find("p:not(:first)");
             //1
 
+            console.log(lastChildCount);
+
             // 最初のp要素がopacity:1かつ、それ以外のp要素がすべてopacity:0の場合
             if ($firstP.css("opacity") === "1" && $otherPs.css("opacity") === "0") {
                 const nextWrapperCount = $('.next-Wrapper').length;
-                console.log('.next-Wrapper要素の数:', nextWrapperCount);
-
-
-
                 // 最後の.next-Wrapper要素を取得し、クラス名を削除
                 const lastNextWrapper = $('.next-Wrapper').last();
 
                 // ここに処理内容を記述
-                console.log("このdiv内の最初のp要素のみがopacity:1です");
 
                 $(elements[lastChildCount]).removeClass('currentWrapper');
                 $(elements[lastChildCount - 1]).addClass('currentWrapper');
@@ -308,7 +308,6 @@ $(document).ready(function () {
                 $(".currentWrapper").removeClass('next-Wrapper');
                 $(".currentWrapper").next().addClass('next-Wrapper');
                 $('.next-Wrapper').css({ 'opacity': '0' });
-
 
                 $(".currentWrapper").css({ 'opacity': '1' });
                 $(".currentWrapper p").css({ 'opacity': '1' });
@@ -319,6 +318,7 @@ $(document).ready(function () {
                 lastChildCount--;
 
             };
+
 
             //ここまで
 
