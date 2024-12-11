@@ -11,7 +11,6 @@ $(document).ready(function () {
     let lastChildCount = 0;
     let firstChildCount = 0;
     let $newDiv = $('<div class="paragraph__wrapper">');
-    console.log("firstChildCount" + firstChildCount);
 
 
     $("p.paragraph").each((i, elem) => {
@@ -64,6 +63,9 @@ $(document).ready(function () {
     $(document).on("keydown touchstart", (event) => {
         const screenWidth = $(window).width();
         let touchX = screenWidth;
+        const lastChild = $('.last-child');
+        const firstChild = $('.first-child');
+        const paragraphWrapperP = $('.paragraph__wrapper p');
 
         // console.log(event.key, touchX);
 
@@ -81,8 +83,9 @@ $(document).ready(function () {
         // 左矢印キーが押された場合 またはタッチ
         if (event.key === 'ArrowLeft' || touchX < screenWidth / 2) {
             // クラス名last-childの要素を取得
-            const lastChild = $('.last-child');
             console.log("左");
+            console.log("lastchildCount" + lastChildCount + "カウント");
+
 
             // lastChildのopacityが1の場合、targetDivのopacityを0にする
             if (lastChild[lastChildCount].style.opacity === '1') {
@@ -90,20 +93,18 @@ $(document).ready(function () {
                 lastChildCount++;
                 console.log('lastchildCount' + lastChildCount);
 
-
-
                 elements.each(function (index) {
                     $(this).css("opacity", "0");
                 });
 
+                $('.paragraph__wrapper p').each(function (index) {
+                    $(this).css("opacity", "0");
+                });
 
                 $(elements[lastChildCount]).css({
                     // ここに変更したいCSSプロパティを記述する
                     opacity: '1',
                 });
-
-                firstChildCount++;
-
             }
             // if (lastChild[lastChildCount].style.opacity === '1') {
             //     console.log(lastChild[lastChildCount]);
@@ -267,27 +268,41 @@ $(document).ready(function () {
         }
         //右矢印が押された場合 またはタッチ
         if (event.key === 'ArrowRight' || touchX >= screenWidth / 2) {
-            const firstChild = $('.first-child');
             console.log("右");
-            console.log("firstChildCount" + firstChildCount);
 
-            // lastChildのopacityが1の場合、targetDivのopacityを0にする
-            if (firstChild[firstChildCount].style.opacity === '0') {
+            let $firstP = $(elements[lastChildCount]).find("p:first");
+            let $otherPs = $(elements[lastChildCount]).find("p:not(:first)");
+            //1
+            console.log("lastChildCount" + lastChildCount);
 
-                console.log('firstChildCount' + firstChildCount);
 
+            // 最初のp要素がopacity:1かつ、それ以外のp要素がすべてopacity:0の場合
+            if ($firstP.css("opacity") === "1" && $otherPs.css("opacity") === "0") {
+                // ここに処理内容を記述
+                console.log("このdiv内の最初のp要素のみがopacity:1です");
+
+                lastChildCount--;
+                console.log('lastchildCount' + lastChildCount);
 
                 elements.each(function (index) {
                     $(this).css("opacity", "0");
                 });
 
 
-                $(elements[firstChildCount]).css({
+                $(elements[0]).css({
+                    // ここに変更したいCSSプロパティを記述する
+                    opacity: '1',
+                });
+                //0
+
+                $(paragraphWrapperP).css({
                     // ここに変更したいCSSプロパティを記述する
                     opacity: '1',
                 });
 
-            }
+            };
+
+            // }
             //ここまで
 
             if (0 < count && count <= 29) {
