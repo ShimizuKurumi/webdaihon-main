@@ -11,6 +11,7 @@ $(document).ready(function () {
     let lastChildCount = 0;
     let firstChildCount = 1;
     let $newDiv = $('<div class="paragraph__wrapper">');
+    const lastParagraph = document.querySelector(".paragraph--27");
 
 
 
@@ -119,18 +120,22 @@ $(document).ready(function () {
 
 
                 $(elements[lastChildCount]).addClass('currentWrapper');
-                $(elements[lastChildCount - 1]).removeClass('currentWrapper');
+                if (!(lastParagraph.style.opacity === '1')) {
+                    $(elements[lastChildCount - 1]).removeClass('currentWrapper');
+                }
                 $(".currentWrapper").css({ 'opacity': '1' });
 
                 $(".currentWrapper").next().addClass('next-Wrapper');
                 $(".currentWrapper").removeClass('next-Wrapper');
 
+
                 $(".currentWrapper").prev().addClass("prev-Wrapper");
                 $(".currentWrapper").removeClass("prev-Wrapper");
 
                 $(".currentWrapper").prev().prev().removeClass("prev-Wrapper");
-
             }
+
+
             // if (lastChild[lastChildCount].style.opacity === '1') {
             //     console.log(lastChild[lastChildCount]);
             //     keyCount++;
@@ -161,7 +166,7 @@ $(document).ready(function () {
 
             // }
 
-            if (0 <= count && count < 29) {
+            if (0 <= count && count < 26) {
                 count++;
                 //PC処理
                 paragraph[count].css({
