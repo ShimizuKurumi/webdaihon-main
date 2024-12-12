@@ -310,6 +310,9 @@ html {
   transform: translate(-50%, -50%);
   transition: 0.8s;
 }
+.bg-eye--2 {
+  opacity: 0;
+}
 
 @-webkit-keyframes tikatika {
   0% {

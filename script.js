@@ -170,14 +170,22 @@ $(document).ready(function () {
             };
 
             if (count === 4) {
-                $('.bg-eye').css({
+                $('.bg-eye--1').css({
+                    'opacity': "0",
+                });
+                $('.bg-eye--2').css({
+                    'opacity': "0.1",
+                });
+
+
+            } else if (count === 5) {
+                $('.bg-eye--1').css({
+                    'opacity': "0.1",
+                });
+                $('.bg-eye--2').css({
                     'opacity': "0",
                 });
 
-            } else if (count === 5) {
-                $('.bg-eye').css({
-                    'opacity': "0.1",
-                });
             } else if (count === 8) {
                 $('.body').css({
                     'background-color': "#000",
@@ -236,7 +244,7 @@ $(document).ready(function () {
                 $('.cls-1').css({
                     'fill': "#0B1632",
                 });
-                $('.bg-eye').css({
+                $('.bg-eye--1').css({
                     'opacity': "0.1",
                 });
                 $('.st0').css({
@@ -276,12 +284,19 @@ $(document).ready(function () {
                 });
 
             } else if (count === 15) {
-                $('.bg-eye').css({
+                $('.bg-eye--1').css({
                     'opacity': "0",
                 });
-            } else if (count === 16) {
-                $('.bg-eye').css({
+                $('.bg-eye--2').css({
                     'opacity': "0.1",
+                });
+
+            } else if (count === 16) {
+                $('.bg-eye--1').css({
+                    'opacity': "0.1",
+                });
+                $('.bg-eye--2').css({
+                    'opacity': "0",
                 });
 
             } else if (count === 17) {
@@ -349,12 +364,18 @@ $(document).ready(function () {
             };
 
             if (count < 4) {
-                $('.bg-eye').css({
+                $('.bg-eye--1').css({
                     'opacity': "0.1",
                 });
-            } else if (count < 5) {
-                $('.bg-eye').css({
+                $('.bg-eye--2').css({
                     'opacity': "0",
+                });
+            } else if (count < 5) {
+                $('.bg-eye--1').css({
+                    'opacity': "0",
+                });
+                $('.bg-eye--2').css({
+                    'opacity': "0.1",
                 });
             } else if (count < 8) {
                 $('.body').css({
@@ -380,7 +401,7 @@ $(document).ready(function () {
                 $('.cls-1').css({
                     'fill': "#0B1632",
                 });
-                $('.bg-eye').css({
+                $('.bg-eye--1').css({
                     'opacity': "0.1",
                 });
                 $('.st0').css({
@@ -455,13 +476,19 @@ $(document).ready(function () {
             }
 
             else if (count < 15) {
-                $('.bg-eye').css({
+                $('.bg-eye--1').css({
                     'opacity': "0.1",
+                });
+                $('.bg-eye--2').css({
+                    'opacity': "0",
                 });
 
             } else if (count < 16) {
-                $('.bg-eye').css({
+                $('.bg-eye--1').css({
                     'opacity': "0",
+                });
+                $('.bg-eye--2').css({
+                    'opacity': "0.1",
                 });
 
             } else if (count < 24) {
