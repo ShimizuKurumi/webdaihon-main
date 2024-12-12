@@ -240,7 +240,31 @@ html {
     }
 }
 
+@keyframes framerotate {
+    0% {
+        rotate: 0deg;
+    }
+
+    30% {
+        rotate: 10deg;
+    }
+
+    60% {
+        rotate: -10deg;
+    }
+
+    100% {
+        rotate: 0deg;
+    }
+}
+
 .frame {
+    // rotate: 10deg;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    // animation: framerotate 1.5s ease infinite;
+
     &--top {
         display: flex;
         justify-content: space-between;
