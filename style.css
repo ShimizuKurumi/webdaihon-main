@@ -34,7 +34,7 @@ html {
 .bounce-wrapper {
   width: 100vw;
   height: 100vh;
-  border: 1px solid #F9EFE1;
+  border: 1px solid #0B1632;
   position: fixed;
   z-index: -1;
 }
