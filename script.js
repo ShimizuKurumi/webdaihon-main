@@ -1,7 +1,7 @@
 // const paragraph = document.querySelectorAll(".paragraph");
 
 
-$(document).ready(function () {
+function start() {
     let paragraphWidth = [];
     let paragraph = [];
     let count = 0;
@@ -508,10 +508,11 @@ $(document).ready(function () {
     });
 
 
-});
+};
 
 $(document).ready(function () {
     $(".opening__button").click(function () {
+        start();
         $(".opening").css({ 'animation': 'btn 1s ease forwards', });
         $(".opening__bg").css({ 'animation': 'btn 1s ease forwards', });
         // $(".frame-img .cls-1").css({ 'fill': '#0B1632', });
