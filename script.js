@@ -166,7 +166,7 @@ function start() {
 
             // }
 
-            if (0 <= count && count < 26) {
+            if (0 <= count && count < 27) {
                 count++;
                 //PC処理
                 paragraph[count].css({
@@ -304,9 +304,9 @@ function start() {
                     'opacity': "0",
                 });
 
-            } else if (count === 17) {
+            } else if (count === 18) {
                 $('#clock')[0].play();
-            } else if (count === 23) {
+            } else if (count === 24) {
                 $('#bgm')[0].play();
                 $('.frame').css({ 'animation': 'framerotate 1.5s ease infinite' });
             }
@@ -496,6 +496,8 @@ function start() {
                     'opacity': "0.1",
                 });
 
+            } else if (count < 19) {
+                $('#clock')[0].play();
             } else if (count < 24) {
                 $('#bgm')[0].pause();
                 $('#bgm')[0].currentTime = 0;
