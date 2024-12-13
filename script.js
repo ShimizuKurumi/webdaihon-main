@@ -510,6 +510,17 @@ $(document).ready(function () {
 
 });
 
+$(document).ready(function () {
+    $(".opening__button").click(function () {
+        $(".opening").css({ 'animation': 'btn 1s ease forwards', });
+        $(".opening__bg").css({ 'animation': 'btn 1s ease forwards', });
+        // $(".frame-img .cls-1").css({ 'fill': '#0B1632', });
+        // $(".line--top").css({ 'background-color': '#0B1632', });
+        // $(".line--bottom").css({ 'background-color': '#0B1632', });
+        // $(".line--left").css({ 'background-color': '#0B1632', });
+        // $(".line--right").css({ 'background-color': '#0B1632', });
+    });
+});
 
 // $(document).ready(function () {
 //     // フェードアウトさせたい要素のセレクタをここに指定します
@@ -540,3 +551,86 @@ $(document).ready(function () {
 //         $(".hover-image").remove();
 //     });
 // });
+
+$(function () {
+    var isDown = true;
+    var isLeft = true;
+
+    var lowLimit = 3;
+    var highLimit = 6;
+
+    // Adjust speed of H and V (for random feeling)
+    var randHDuration = Math.floor(Math.random() * (highLimit * 6500)) + (lowLimit + 6500);
+    var randVDuration = Math.floor(Math.random() * (highLimit * 6500)) + (lowLimit + 6500);
+
+    function hAnimate() {
+        if (isLeft) {
+            $("#object").animate(
+                {
+                    left: $(".bounce-wrapper").innerWidth() - $("#object").outerWidth()
+                },
+                {
+                    duration: randHDuration,
+                    easing: "linear",
+                    queue: false,
+                    complete: function () {
+                        isLeft = false;
+                        hAnimate();
+                    }
+                }
+            );
+        } else {
+            $("#object").animate(
+                {
+                    left: 0
+                },
+                {
+                    duration: randHDuration,
+                    easing: "linear",
+                    queue: false,
+                    complete: function () {
+                        isLeft = true;
+                        hAnimate();
+                    }
+                }
+            );
+        }
+    }
+
+    function vAnimate() {
+        if (isDown) {
+            $("#object").animate(
+                {
+                    top: $(".bounce-wrapper").innerHeight() - $("#object").outerHeight()
+                },
+                {
+                    duration: randVDuration,
+                    easing: "linear",
+                    queue: false,
+                    complete: function () {
+                        isDown = false;
+                        vAnimate();
+                    }
+                }
+            );
+        } else {
+            $("#object").animate(
+                {
+                    top: 0
+                },
+                {
+                    duration: randVDuration,
+                    easing: "linear",
+                    queue: false,
+                    complete: function () {
+                        isDown = true;
+                        vAnimate();
+                    }
+                }
+            )
+        }
+    }
+
+    hAnimate();
+    vAnimate();
+});
