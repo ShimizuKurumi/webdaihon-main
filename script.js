@@ -513,6 +513,7 @@ function start() {
 $(document).ready(function () {
     $(".opening__button").click(function () {
         start();
+        $('#water')[0].play();
         $(".opening").css({ 'animation': 'btn 1s ease forwards', });
         $(".opening__bg").css({ 'animation': 'btn 1s ease forwards', });
         // $(".frame-img .cls-1").css({ 'fill': '#0B1632', });
@@ -553,6 +554,8 @@ $(document).ready(function () {
 //     });
 // });
 
+
+//もや
 $(function () {
     var isDown = true;
     var isLeft = true;
