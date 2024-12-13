@@ -11,8 +11,8 @@ function start() {
     let lastChildCount = 0;
     let firstChildCount = 1;
     let $newDiv = $('<div class="paragraph__wrapper">');
-    const lastParagraph = document.querySelector(".paragraph--27");
-
+    const twoLastParagraph = document.querySelector(".paragraph--27");
+    const lastParagraph = document.querySelector(".paragraph--28");
 
 
     $("p.paragraph").each((i, elem) => {
@@ -20,6 +20,7 @@ function start() {
         paragraphWidth[i] = $(elem).width();
     });
     console.log(paragraphWidth);
+
 
 
 
@@ -71,6 +72,14 @@ function start() {
     const prevWrapper2 = currentElement.prevAll('.paragraph__wrapper').eq(1);
 
 
+    $(".paragraph__wrapper").each(function () {
+        var $this = $(this);
+        var $p = $this.find("p");
+
+        if ($p.length === 1) {
+            $p.addClass("single-p"); // クラス名を"single-p"に変更できます
+        }
+    });
 
     $(document).on("keydown touchstart", (event) => {
         const screenWidth = $(window).width();
@@ -98,7 +107,10 @@ function start() {
             // lastChildのopacityが1の場合、targetDivのopacityを0にする
             if (lastChild[lastChildCount].style.opacity === '1') {
 
-                lastChildCount++;
+                if (!(lastParagraph.style.opacity === '1')) {
+                    lastChildCount++;
+                }
+
 
                 elements.each(function (index) {
                     $(this).css("opacity", "0");
@@ -136,36 +148,6 @@ function start() {
             }
 
 
-            // if (lastChild[lastChildCount].style.opacity === '1') {
-            //     console.log(lastChild[lastChildCount]);
-            //     keyCount++;
-
-
-            //     if (keyCount === 2) {
-            //         // 2回押されたら処理を実行
-            //         console.log('左矢印キーが2回押されました');
-            //         // ここに実行したい処理を記述
-            //         // 例:
-            //         wrapperCount++;
-
-            //         $(".paragraph__wrapper").each(function (index) {
-            //             $(this).css("opacity", "0");
-            //         });
-
-
-            //         $(elements[wrapperCount]).css({
-            //             // ここに変更したいCSSプロパティを記述する
-            //             opacity: '1',
-            //         });
-            //     }
-            //     if (keyCount === 3) {
-            //         keyCount = 0;
-            //         console.log('左矢印キーが3回押されました');
-            //         lastChildCount++;
-            //     }
-
-            // }
-
             if (0 <= count && count < 27) {
                 count++;
                 //PC処理
@@ -201,6 +183,9 @@ function start() {
                 $('.help__text').css({
                     'color': "#F9EFE1",
                 });
+                $('.st00').css({
+                    'fill': "#F9EFE1",
+                });
                 $('.line--top').css({
                     'background-color': "#F9EFE1",
                 });
@@ -235,6 +220,9 @@ function start() {
                 $('.help__text').css({
                     'color': "#0B1632",
                 });
+                $('.st00').css({
+                    'fill': "#0B1632",
+                });
                 $('.line--top').css({
                     'background-color': "#0B1632",
                 });
@@ -266,6 +254,9 @@ function start() {
                 });
                 $('.help__text').css({
                     'color': "#F9EFE1",
+                });
+                $('.st00').css({
+                    'fill': "#F9EFE1",
                 });
                 $('.line--top').css({
                     'background-color': "#F9EFE1",
@@ -328,6 +319,8 @@ function start() {
 
                 // 最初のp要素がopacity:1かつ、それ以外のp要素がすべてopacity:0の場合
                 if ($firstP.css("opacity") === "1" && $otherPs.css("opacity") === "0") {
+                    console.log("適用されています");
+
                     const nextWrapperCount = $('.next-Wrapper').length;
                     // 最後の.next-Wrapper要素を取得し、クラス名を削除
                     const lastNextWrapper = $('.next-Wrapper').last();
@@ -341,6 +334,10 @@ function start() {
                     $(".currentWrapper").next().addClass('next-Wrapper');
                     $('.next-Wrapper').css({ 'opacity': '0' });
 
+
+                    $(".next-Wrapper").css({ 'opacity': '0' });
+                    $(".next-Wrapper p").css({ 'opacity': '0' });
+
                     $(".currentWrapper").css({ 'opacity': '1' });
                     $(".currentWrapper p").css({ 'opacity': '1' });
 
@@ -353,13 +350,13 @@ function start() {
                     lastNextWrapper.removeClass('next-Wrapper');
 
                     lastChildCount--;
-
                 };
             }
 
+
             //ここまで
 
-            if (0 < count && count <= 29) {
+            if (0 < count && count <= 27) {
                 count--;
 
                 paragraph[count + 1].css({
@@ -392,6 +389,9 @@ function start() {
                 $('.help__text').css({
                     'color': "#0B1632",
                 });
+                $('.st00').css({
+                    'fill': "#0B1632",
+                });
                 $('.line--top').css({
                     'background-color': "#0B1632",
                 });
@@ -422,6 +422,9 @@ function start() {
                 });
                 $('.help__text').css({
                     'color': "#F9EFE1",
+                });
+                $('.st00').css({
+                    'fill': "#F9EFE1",
                 });
                 $('.line--top').css({
                     'background-color': "#F9EFE1",
@@ -457,6 +460,10 @@ function start() {
                 $('.help__text').css({
                     'color': "#0B1632",
                 });
+                $('.st00').css({
+                    'fill': "#0B1632",
+                });
+
                 $('.line--top').css({
                     'background-color': "#0B1632",
                 });
@@ -510,6 +517,10 @@ function start() {
     });
 
 
+    if ($('.single-p').hasClass('first-child last-child')) {
+
+        $('.single-p').removeClass('last-child');
+    }
 };
 
 $(document).ready(function () {
@@ -639,4 +650,21 @@ $(function () {
 
     hAnimate();
     vAnimate();
+});
+
+
+//リサイズしたらリロード
+var timer = false;
+var prewidth = $(window).width();//初期幅設定
+$(window).on('load resize', function () {//実際は、resizeのみでなく、load 時にもセットが必要
+    if (timer !== false) {//timer セット
+        clearTimeout(timer);
+    }
+    timer = setTimeout(function () {
+        var nowWidth = $(window).width();//変化後の幅取得
+        if (prewidth !== nowWidth) {//初期幅と変化後が同じで無い場合
+            location.reload();//リロードする
+        }
+        prewidth = nowWidth;//初期幅と変化後が同じになった（変化が止まる）
+    }, 200);//止まる判定までのミリ秒
 });

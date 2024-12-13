@@ -221,8 +221,8 @@ html {
     display: flex;
     text-align: center;
     justify-content: space-between;
-    max-width: 350px;
-    width: 70%;
+    max-width: 330px;
+    width: 65%;
 
     &__left,
     &__right {
@@ -230,7 +230,7 @@ html {
     }
 
     &__img {
-        width: 70%;
+        width: 50%;
         max-width: 60px;
         margin-bottom: 8%;
     }
@@ -256,6 +256,10 @@ html {
     .help__text--pc {
         display: none;
     }
+
+    html {
+        font-size: 15px;
+    }
 }
 
 .paragraph {
@@ -274,7 +278,7 @@ html {
         writing-mode: vertical-rl;
         width: fit-content;
         padding-top: 15vh;
-        padding-bottom: 20vh;
+        padding-bottom: 22vh;
         line-height: 2;
         transition: .5s;
         margin-left: auto;
