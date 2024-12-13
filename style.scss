@@ -22,7 +22,7 @@ html {
     font-size: clamp(15px, 2.5vw, 1.2rem);
     font-family: "Zen Old Mincho", serif;
     letter-spacing: 0.07em;
-    overflow: hidden;
+    overflow-x: hidden;
 
     // &__inner {
     //     overflow: hidden;
