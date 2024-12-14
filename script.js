@@ -144,7 +144,10 @@ function start() {
                 $(".currentWrapper").prev().addClass("prev-Wrapper");
                 $(".currentWrapper").removeClass("prev-Wrapper");
 
+
                 $(".currentWrapper").prev().prev().removeClass("prev-Wrapper");
+
+                // $(".prev-Wrapper p").css({ 'opacity': '0' });
             }
 
 
@@ -298,8 +301,9 @@ function start() {
             } else if (count === 18) {
                 $('#clock')[0].play();
             } else if (count === 24) {
+                $('.fire').css({ 'opacity': '0.3' });
                 $('#bgm')[0].play();
-                $('.frame').css({ 'animation': 'framerotate 1.5s ease infinite' });
+                $('.frame').css({ 'animation': 'framerotate 1.5s ease  11.5s infinite' });
             }
 
         }
@@ -318,7 +322,7 @@ function start() {
             if (lastChildCount > 0) {
 
                 // 最初のp要素がopacity:1かつ、それ以外のp要素がすべてopacity:0の場合
-                if ($firstP.css("opacity") === "1" && $otherPs.css("opacity") === "0") {
+                if ($firstP.css("opacity") === "1" && $otherPs.css("opacity") === "0" || $('.currentWrapper .single-p').css("opacity") === "1") {
                     console.log("適用されています");
 
                     const nextWrapperCount = $('.next-Wrapper').length;
@@ -509,6 +513,7 @@ function start() {
                 $('#bgm')[0].pause();
                 $('#bgm')[0].currentTime = 0;
                 $('.frame').css({ 'animation': 'none' });
+                $('.fire').css({ 'opacity': '0' });
 
             }
 
